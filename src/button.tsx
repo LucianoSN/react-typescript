@@ -1,21 +1,30 @@
 import React, { MouseEvent } from 'react';
 
-type DefaultProps = {
-	color?: 'blue' | 'green' | 'red';
-	type?: 'button' | 'submit';
+const defaultProps = {
+	color: 'is-danger' as 'is-danger' | 'is-success' | 'is-dark',
+	type: 'button' as 'button',
 };
+
+type DefaultProps = Readonly<typeof defaultProps>;
 
 type Props = {
 	onClick(e: MouseEvent<HTMLElement>): void;
 } & Partial<DefaultProps>;
 
-const defaultProps: DefaultProps = {
-	color: 'blue',
-	type: 'button',
+const Button: React.FC<Props> = ({ onClick, color, type, children }) => {
+	return (
+		<>
+			<button
+				type={type}
+				className={`${type} ${color}`}
+				onClick={onClick}
+			>
+				{children}
+			</button>
+		</>
+	);
 };
 
-const Button: React.FC<Props> = ({ onClick, color, type }) => {
-	return <h2>button</h2>;
-};
+Button.defaultProps = defaultProps;
 
 export default Button;
